@@ -1,0 +1,59 @@
+.loginFormInputContainer {
+  margin: 50px auto;
+  padding: 2% 0%;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 5px;
+  width: 50vw;
+  max-width: 650px;
+}
+
+.loginButton {
+  text-transform: none !important;
+  width: 100px;
+}
+.resetButton {
+  text-transform: none !important;
+}
+.divclass {
+  margin-left: 50px;
+  margin-right: 50px;
+  width: calc(100% + -100px);
+}
+.input {
+  width: 100%;
+}
+.MuiFormControl-root {
+  width: 100%;
+}
+.divButton {
+  justify-content: space-between;
+  display: flex;
+}
+.errorText{
+  font-size: 14;
+  color: red;
+}
+
+@media only screen and (max-width: 800px) {
+  .loginFormInputContainer {
+    width: 80%;
+  }
+  .divclass {
+    margin: 0 auto;
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .divButton {
+    flex-direction: column;
+    display: flex;
+  }
+  .resetButton {
+    width: 100% !important;
+  }
+  .loginButton {
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+}

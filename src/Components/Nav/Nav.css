@@ -1,0 +1,62 @@
+.navvv {
+  margin: 50px auto;
+  padding: 2% 0%;
+  background-color: white;
+  width: 50vw;
+  max-width: 650px;
+}
+
+.divclass {
+  margin-left: 50px;
+  margin-right: 50px;
+  width: calc(100% + -100px);
+}
+
+.input {
+  width: 100%;
+}
+.MuiFormControl-root {
+  width: 100%;
+}
+.divButton {
+  display:inline-block;
+  justify-content: space-between;
+  display: flex;
+}
+
+  .button {
+  color:black;
+  display: inline;
+  margin: 3%;
+  padding: 7px 23px;
+  font: 125 65% langdon;
+  background: transparent;
+  border: 3px solid black;
+  cursor: pointer;
+} 
+
+.button:hover {
+  background: #f7f7f7;
+  border: 1px solid #8b8b8b;
+}
+
+.button:active {
+  background: #2e2e2e;
+  border: 1px solid black;
+  color: white;
+  }
+
+  @media only screen and (max-width: 1300px) {
+    .button {
+      padding: 1%;
+      margin: 1%;
+    }
+  }
+
+  @media only screen and (max-width: 700px) {
+    .button {
+      display: inherit;
+    }
+  }
+
+ 
