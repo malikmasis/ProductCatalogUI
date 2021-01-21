@@ -1,2 +1,2 @@
 # ProductCatalogUI
-front-end side for ProductCatalog web API
+front-end side with React for ProductCatalog web API
