@@ -32,7 +32,7 @@ class Nav extends Component {
             variant="outlined"
             to="/ProductCatalogImport"
           >
-            Production Catalog
+            Import Production Catalog
                 </Link>
 
           <Link
@@ -40,7 +40,7 @@ class Nav extends Component {
             variant="contained"
             to="/ProductCatalogItem"
           >
-            Import Production Catalog
+            Production Catalog
                 </Link>
           <br />
         </Form>
@@ -50,7 +50,7 @@ class Nav extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  ProductCatalog : state.ProductCatalogReducer,
+  ProductCatalog: state.ProductCatalogReducer,
   message: state.MessageReducer,
 });
 

@@ -2,14 +2,9 @@ import axios from "axios";
 import * as rootUrl from "./RootService";
 
 class ProductCatalogService {
-  getProductCatalog(userData) {
-    let fullDescription = '';
-    if (userData.FullDescription !== undefined) {
-      fullDescription = userData.FullDescription;
-    }
+  saveProductCatalog(userData) {
     return axios
-      .get(rootUrl.TestPaqApiUrl + rootUrl.ProductCatalogItemPath
-        + `?OriginCountry=${userData.OriginCountry}&DestinationCountry=${userData.DestinationCountry}&FullDescription=${fullDescription}`)
+      .post(rootUrl.TestPaqApiUrl + rootUrl.ProductCatalogItemPath, userData)
       .then((res) => {
         const token = res.data;
         return token;

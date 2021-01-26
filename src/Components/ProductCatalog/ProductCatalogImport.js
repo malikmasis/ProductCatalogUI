@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
-import { ProductCatalogItem } from "../../Redux/Actions/ProductCatalogItemAction";
+import { importProductCatalog } from "../../Redux/Actions/ProductCatalogImportAction";
 import { succes } from "../../Helpers/NotifierHelper";
 import { connect } from "react-redux";
 import { Button, TextField, FormControl, FormGroup } from "@material-ui/core";
@@ -47,7 +47,7 @@ class ProductCatalogImport extends Component {
 
     this.props.dispatch(ShowLoader());
 
-    this.props.dispatch(ProductCatalogItem(data))
+    this.props.dispatch(importProductCatalog(data))
       .then(() => {
         let resultt = this.props.ProductCatalogItem;
         this.setState({ resultStr: resultt });
@@ -87,7 +87,7 @@ class ProductCatalogImport extends Component {
           </div>
         )}
         <center>
-          <h2>Import Duty Rate Page</h2>
+          <h2>Import Product Catalog Page</h2>
           <hr />
         </center>
         <Form>
@@ -113,7 +113,7 @@ class ProductCatalogImport extends Component {
                   className="loginButton"
                   onClick={this.handleSubmit}
                 >
-                  Import Duty Rate
+                  Import Product Catalog
                 </Button>
 
                 <Button
@@ -135,7 +135,7 @@ class ProductCatalogImport extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  ProductCatalogImport: state.ProductCatalogImportReducer,
+  ProductCatalogImport: state.ProductCatalogReducer,
   message: state.MessageReducer,
 });
 

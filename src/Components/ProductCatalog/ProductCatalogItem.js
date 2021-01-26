@@ -1,23 +1,27 @@
 import React, { Component } from "react";
 import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
-import { getProductCatalog } from "../../Redux/Actions/ProductCatalogItemAction";
+import { saveProductCatalog } from "../../Redux/Actions/ProductCatalogItemAction";
 import { connect } from "react-redux";
-import { Button, TextField, FormControl, FormGroup, TextareaAutosize, FormLabel } from "@material-ui/core";
+import { Button, TextField, FormControl, FormGroup } from "@material-ui/core";
 import { Form } from "reactstrap";
 
 class ProductCatalogItem extends Component {
-  state = { originCountryError: null, destinationCountryError: null };
+  state = { codeError: null, nameError: null, priceError: null };
 
   validation = () => {
     let result = false;
-    this.setState({ originCountryError: null, destinationCountryError: null });
+    this.setState({ codeError: null, nameError: null, priceError: null });
 
-    if (!this.state.originCountry) {
-      this.setState({ originCountryError: "Origin Name is required" });
+    if (!this.state.code) {
+      this.setState({ codeError: "Code is required" });
       result = true;
     }
-    if (!this.state.destinationCountry) {
-      this.setState({ destinationCountryError: "Destination Name is required" });
+    if (!this.state.name) {
+      this.setState({ nameError: "Name is required" });
+      result = true;
+    }
+    if (!this.state.price) {
+      this.setState({ priceError: "Price is required" });
       result = true;
     }
 
@@ -36,23 +40,25 @@ class ProductCatalogItem extends Component {
 
     this.props.dispatch(ShowLoader());
     let productCatalogInfo = {
-      OriginCountry: this.state.originCountry,
-      DestinationCountry: this.state.destinationCountry,
-      FullDescription: this.state.fullDescription
+      code: this.state.code,
+      name: this.state.name,
+      price: +this.state.price,
+      photo: this.state.photo,
     };
 
-    this.props.dispatch(getProductCatalog(productCatalogInfo))
+    this.props.dispatch(saveProductCatalog(productCatalogInfo))
       .then(() => {
-        let getProductCatalog = JSON.parse(this.props.ProductCatalogItem);
-        if (getProductCatalog.error === undefined || getProductCatalog.error === null) {
-          this.setState({ resultStr: getProductCatalog.value });
+        debugger;
+        let saveProductCatalog = JSON.parse(this.props.ProductCatalogItem);
+        if (saveProductCatalog.error === undefined || saveProductCatalog.error === null) {
+          this.setState({ resultStr: saveProductCatalog.value });
         }
         else {
-          this.setState({ resultStr: getProductCatalog.rawApiResponse });
+          this.setState({ resultStr: saveProductCatalog.rawApiResponse });
         }
       })
       .catch(() => {
-        this.setState({ resultStr: getProductCatalog.rawApiResponse });
+        this.setState({ resultStr: saveProductCatalog.rawApiResponse });
         this.setState({ message: "Network Problem" });
       })
       .finally(() => {
@@ -78,53 +84,41 @@ class ProductCatalogItem extends Component {
             <FormControl>
               <FormGroup>
                 <TextField
-                  name="originCountry"
+                  name="code"
                   className="input"
-                  id="originCountry"
-                  label="Origin Country"
+                  id="code"
+                  label="Code"
                   variant="outlined"
                   onChange={this.handleChange}
                 />
-                <div className="errorText">{this.state.originCountryError}</div>
+                <div className="errorText">{this.state.codeError}</div>
               </FormGroup>
 
               <br />
               <FormGroup>
                 <TextField
-                  name="destinationCountry"
+                  name="name"
                   className="input"
-                  id="destinationCountry"
-                  label="Destination Country"
+                  id="name"
+                  label="Name"
                   variant="outlined"
                   onChange={this.handleChange}
                 />
-                <div className="errorText">{this.state.destinationCountryError}</div>
+                <div className="errorText">{this.state.nameError}</div>
               </FormGroup>
 
               <br />
               <FormGroup>
                 <TextField
-                  name="fullDescription"
+                  name="price"
                   className="input"
-                  id="fullDescription"
-                  label="Full Description"
+                  id="price"
+                  label="Price"
                   variant="outlined"
+                  type="number"
                   onChange={this.handleChange}
                 />
-              </FormGroup>
-
-              <br />
-              <FormGroup>
-                <FormLabel > Result
-              </FormLabel>
-                <TextareaAutosize
-                  disabled={true}
-                  className="input"
-                  rowsMax={6}
-                  rowsMin={4}
-                  aria-label="maximum height"
-                  defaultValue={this.state.resultStr}
-                />
+                <div className="errorText">{this.state.priceError}</div>
               </FormGroup>
 
               <br />
@@ -135,7 +129,7 @@ class ProductCatalogItem extends Component {
                   className="loginButton"
                   onClick={this.handleSubmit}
                 >
-                  Get Catalog Product
+                  Save
                 </Button>
               </div>
               <br />
@@ -148,7 +142,7 @@ class ProductCatalogItem extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  ProductCatalogItem: state.ProductCatalogItemReducer,
+  ProductCatalogItem: state.ProductCatalogReducer,
   message: state.MessageReducer,
 });
 

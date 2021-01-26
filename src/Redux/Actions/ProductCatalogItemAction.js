@@ -1,14 +1,15 @@
 import ProductCatalogService from "../../Services/ProductCatalogService";
 import * as ActionTypes from "./ActionTypes";
 
-export const getProductCatalog = (userInfo) => (dispatch) => {
-  return ProductCatalogService.getProductCatalog(userInfo).then(
+export const saveProductCatalog = (productInfo) => (dispatch) => {
+  return ProductCatalogService.saveProductCatalog(productInfo).then(
     (data) => {
       try {
         
         dispatch({
           type: ActionTypes.GET_TEST_PACKAGE_SUCCESS,
-          payload: JSON.stringify(data),
+          // payload: JSON.stringify(data),
+          payload: data,
         });
 
         return Promise.resolve();
