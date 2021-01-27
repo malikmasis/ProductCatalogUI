@@ -6,7 +6,7 @@ import { JwtDecoder } from "../Helpers/JWTHelper";
 class AuthService {
   login(userData) {
     return axios
-      .post(rootUrl.TestPaqApiUrl + rootUrl.AuthenticationPath, userData)
+      .post(rootUrl.BaseApiUrl + rootUrl.AuthenticationPath, userData)
       .then((res) => {
         const token = res.data;
         SetAuthToken(token);

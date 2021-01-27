@@ -4,7 +4,7 @@ import * as rootUrl from "./RootService";
 class ProductCatalogImportService {
   importProductCatalog(file) {
     return axios
-      .post(rootUrl.TestPaqApiUrl + rootUrl.ProductCatalogImportPath, file)
+      .post(rootUrl.BaseApiUrl + rootUrl.ProductCatalogImportPath, file)
       .then((res) => {
         const token = res.data;
         return token;

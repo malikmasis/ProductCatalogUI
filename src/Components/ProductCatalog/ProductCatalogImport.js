@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Form } from "reactstrap";
+import { Button, TextField, FormControl, FormGroup } from "@material-ui/core";
+
 import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
 import { importProductCatalog } from "../../Redux/Actions/ProductCatalogImportAction";
-import { succes } from "../../Helpers/NotifierHelper";
-import { connect } from "react-redux";
-import { Button, TextField, FormControl, FormGroup } from "@material-ui/core";
-import { Form } from "reactstrap";
+import { succes, error } from "../../Helpers/NotifierHelper";
 
 
 class ProductCatalogImport extends Component {
@@ -30,7 +31,6 @@ class ProductCatalogImport extends Component {
   };
 
   handleChange = (event) => {
-
     this.setState({
       selectedFile: event.target.files[0],
       loaded: 0,
@@ -49,36 +49,21 @@ class ProductCatalogImport extends Component {
 
     this.props.dispatch(importProductCatalog(data))
       .then(() => {
-        let resultt = this.props.ProductCatalogItem;
+        let resultt = this.props.ProductCatalogImport;
         this.setState({ resultStr: resultt });
         succes("You can download the result file");
       })
       .catch(() => {
         this.setState({ message: "Network Problem" });
+        error("Network Problem");
       })
       .finally(() => {
         this.props.dispatch(HideLoader());
       });
   };
 
-  goImportProductCatalog = () => {
-    let link = document.createElement("a");
-    link.download = `${this.state.selectedFile.name}.csv`;
-
-    var json = JSON.parse(this.state.resultStr);
-
-    let blob = new Blob([json], { type: "text/csv" });
-    link.href = URL.createObjectURL(blob);
-    link.click();
-    URL.revokeObjectURL(link.href);
-  }
-
   render() {
     const message = this.props.message.message;
-    let disable = true;
-    if (this.state.resultStr === null) {
-      disable = false;
-    };
     return (
       <div className="loginFormInputContainer">
         {message && (
@@ -114,15 +99,6 @@ class ProductCatalogImport extends Component {
                   onClick={this.handleSubmit}
                 >
                   Import Product Catalog
-                </Button>
-
-                <Button
-                  disabled={!disable}
-                  variant="contained"
-                  className="loginButton"
-                  onClick={this.goImportProductCatalog}
-                >
-                  Download
                 </Button>
               </div>
               <br />

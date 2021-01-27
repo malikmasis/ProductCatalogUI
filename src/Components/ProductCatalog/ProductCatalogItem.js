@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Form } from "reactstrap";
+import { Button, TextField, FormControl, FormGroup } from "@material-ui/core";
+
 import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
 import { saveProductCatalog } from "../../Redux/Actions/ProductCatalogItemAction";
-import { connect } from "react-redux";
-import { Button, TextField, FormControl, FormGroup } from "@material-ui/core";
-import { Form } from "reactstrap";
+import { succes, error } from "../../Helpers/NotifierHelper";
 
 class ProductCatalogItem extends Component {
   state = { codeError: null, nameError: null, priceError: null };
@@ -48,18 +50,20 @@ class ProductCatalogItem extends Component {
 
     this.props.dispatch(saveProductCatalog(productCatalogInfo))
       .then(() => {
-        debugger;
         let saveProductCatalog = JSON.parse(this.props.ProductCatalogItem);
-        if (saveProductCatalog.error === undefined || saveProductCatalog.error === null) {
+        if (saveProductCatalog.id > 0) {
           this.setState({ resultStr: saveProductCatalog.value });
+          succes("Recorded successfully");
         }
         else {
           this.setState({ resultStr: saveProductCatalog.rawApiResponse });
+          error("Cannot save", this.props.message);
         }
       })
       .catch(() => {
         this.setState({ resultStr: saveProductCatalog.rawApiResponse });
         this.setState({ message: "Network Problem" });
+        error("Network Problem", this.props.message);
       })
       .finally(() => {
         this.props.dispatch(HideLoader());

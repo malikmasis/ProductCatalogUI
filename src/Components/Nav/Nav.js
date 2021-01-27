@@ -32,7 +32,7 @@ class Nav extends Component {
             variant="outlined"
             to="/ProductCatalogImport"
           >
-            Import Production Catalog
+            Import Produc Catalog
                 </Link>
 
           <Link
@@ -40,7 +40,15 @@ class Nav extends Component {
             variant="contained"
             to="/ProductCatalogItem"
           >
-            Production Catalog
+            New Production Catalog
+                </Link>
+
+          <Link
+            className="button"
+            variant="contained"
+            to="/ProductCatalogList"
+          >
+            Production Catalog List
                 </Link>
           <br />
         </Form>

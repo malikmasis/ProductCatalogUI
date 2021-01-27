@@ -66,7 +66,7 @@ class Login extends Component {
           </div>
         )}
         <center>
-          <h2>TestPAQ Login</h2>
+          <h2>Catalog Product Login</h2>
           <hr />
         </center>
         <Form>

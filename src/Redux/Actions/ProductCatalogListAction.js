@@ -1,11 +1,10 @@
-import ProductCatalogService from "../../Services/ProductCatalogService";
+import ProductCatalogListService from "../../Services/ProductCatalogListService";
 import * as ActionTypes from "./ActionTypes";
 
-export const saveProductCatalog = (productInfo) => (dispatch) => {
-  return ProductCatalogService.saveProductCatalog(productInfo).then(
+export const getAllProductCatalogs = () => (dispatch) => {
+  return ProductCatalogListService.getAllProductCatalogs().then(
     (data) => {
       try {
-        
         dispatch({
           type: ActionTypes.GET_TEST_PACKAGE_SUCCESS,
           payload: JSON.stringify(data)

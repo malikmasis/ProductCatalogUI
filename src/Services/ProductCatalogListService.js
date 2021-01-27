@@ -1,10 +1,10 @@
 import axios from "axios";
 import * as rootUrl from "./RootService";
 
-class ProductCatalogService {
-  saveProductCatalog(userData) {
+class ProductCatalogListService {
+  getAllProductCatalogs() {
     return axios
-      .post(rootUrl.BaseApiUrl + rootUrl.ProductCatalogItemPath, userData)
+      .get(rootUrl.BaseApiUrl + rootUrl.ProductCatalogListPath)
       .then((res) => {
         const token = res.data;
         return token;
@@ -13,4 +13,4 @@ class ProductCatalogService {
 
 }
 
-export default new ProductCatalogService();
+export default new ProductCatalogListService();

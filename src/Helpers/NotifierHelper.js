@@ -7,6 +7,13 @@ export const succes = (message)=>{
   });
 }
 
+export const error = (message)=>{
+  toast.error(message, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 3000,
+  });
+}
+
 class NotifierHelper {
   success(message) {
     toast.success(message, {
