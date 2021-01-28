@@ -4,6 +4,7 @@ import { Table, Button } from "reactstrap";
 
 import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
 import { getAllProductCatalogs } from "../../Redux/Actions/ProductCatalogListAction";
+import ProductCatalogDeleteService from "../../Services/ProductCatalogDeleteService";
 import { succes, error } from "../../Helpers/NotifierHelper";
 
 class ProductCatalogList extends Component {
@@ -42,8 +43,21 @@ class ProductCatalogList extends Component {
     console.log("selam", category.id);
   }
 
-  remove = (category) => {
-    console.log("selam", category.id);
+  remove = id => {
+    console.log("selam", id);
+    var he = ProductCatalogDeleteService.removeProductCatalog(id).then((data) => {
+      if (data.id > 0) {
+        let productCatalogs = this.state.categories.filter(c => c.id !== id);
+        this.setState({ categories: productCatalogs });
+        succes(`The product named ${data.name} has been deleted.`);
+      }
+      else {
+        error("Unhandled Error", data);
+      }
+    })
+      .catch(() => {
+        error("Network Problem", this.props.message);
+      });
   }
 
   render() {
@@ -74,14 +88,14 @@ class ProductCatalogList extends Component {
                 <td>{category.name}</td>
                 <td>{category.code}</td>
                 <td>{category.price}</td>
-                {/* <td>
+                <td>
                   <Button
                     color="danger"
                     onClick={() => this.remove(category.id)}
                   >
                     Remove
                 </Button>
-                </td> */}
+                </td>
               </tr>
             ))}
           </tbody>
