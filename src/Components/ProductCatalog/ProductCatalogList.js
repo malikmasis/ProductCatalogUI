@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Table, Button } from "reactstrap";
+import {Link} from "react-router-dom"
 
 import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
 import { getAllProductCatalogs } from "../../Redux/Actions/ProductCatalogListAction";
@@ -85,7 +86,7 @@ class ProductCatalogList extends Component {
           <tbody>
             {this.state.categories.map(category => (
               <tr key={category.id}>
-                <td>{category.name}</td>
+                <td><Link to={"/ProductCatalogItem/"+category.id}>{category.name}</Link></td>
                 <td>{category.code}</td>
                 <td>{category.price}</td>
                 <td>

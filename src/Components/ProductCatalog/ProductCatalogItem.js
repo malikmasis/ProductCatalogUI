@@ -5,10 +5,31 @@ import { Button, TextField, FormControl, FormGroup } from "@material-ui/core";
 
 import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
 import { saveProductCatalog } from "../../Redux/Actions/ProductCatalogItemAction";
+import ProductCatalogGetItemService from "../../Services/ProductCatalogGetItemService";
 import { succes, error } from "../../Helpers/NotifierHelper";
 
 class ProductCatalogItem extends Component {
-  state = { codeError: null, nameError: null, priceError: null };
+  state = { codeError: null, nameError: null, priceError: null, product: null };
+
+  componentDidMount() {
+    const id = this.props.match.params.categoryId;
+    this.getProduct(id);
+  }
+
+  getProduct = id => {
+    console.log("selam", id);
+    var he = ProductCatalogGetItemService.getItemProductCatalogs(id).then((data) => {
+      if (data.id > 0) {
+        this.setState({ product: data });
+      }
+      else {
+        error("Unhandled Error", data);
+      }
+    })
+      .catch(() => {
+        error("Network Problem", this.props.message);
+      });
+  }
 
   validation = () => {
     let result = false;
@@ -92,6 +113,7 @@ class ProductCatalogItem extends Component {
                   className="input"
                   id="code"
                   label="Code"
+                  value={this.state.product !== null ? this.state.product.code : ''}
                   variant="outlined"
                   onChange={this.handleChange}
                 />
@@ -105,6 +127,7 @@ class ProductCatalogItem extends Component {
                   className="input"
                   id="name"
                   label="Name"
+                  value={this.state.product !== null ? this.state.product.name : ''}
                   variant="outlined"
                   onChange={this.handleChange}
                 />
@@ -118,6 +141,7 @@ class ProductCatalogItem extends Component {
                   className="input"
                   id="price"
                   label="Price"
+                  value={this.state.product !== null ? this.state.product.price : 0}
                   variant="outlined"
                   type="number"
                   onChange={this.handleChange}

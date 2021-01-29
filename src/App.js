@@ -15,6 +15,7 @@ function App() {
       <Switch>
         <PublicRoute exact path="/ProductCatalogImport" component={ProductCatalogImport} />
         <PublicRoute exact path="/ProductCatalogItem" component={ProductCatalogItem} />
+        <PublicRoute exact path="/ProductCatalogItem/:categoryId" component={ProductCatalogItem} />
         <PublicRoute exact path="/ProductCatalogList" component={ProductCatalogList} />
         <PublicRoute exact path={["/", "/login"]} component={Login} />
       </Switch>
