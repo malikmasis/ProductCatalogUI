@@ -1,7 +1,7 @@
 import * as ActionTypes from "../Actions/ActionTypes";
 import { JwtDecoder } from "../../Helpers/JWTHelper";
 
-const user =JSON.stringify(JwtDecoder(localStorage.getItem("token")));
+const user = JSON.stringify(JwtDecoder(localStorage.getItem("token")));
 
 const initialState = user
   ? { isLoggedIn: true, user }

@@ -5,16 +5,14 @@ import { Button, TextField, FormControl, FormGroup } from "@material-ui/core";
 
 import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
 import { importProductCatalog } from "../../Redux/Actions/ProductCatalogImportAction";
-import { succes, error } from "../../Helpers/NotifierHelper";
-
+import NotifierHelper from "../../Helpers/NotifierHelper";
 
 class ProductCatalogImport extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      fileError: null,
-      selectedFile: null,
-      resultStr: null
+      fileError: null, selectedFile: null, resultStr: null
     }
   }
 
@@ -51,11 +49,11 @@ class ProductCatalogImport extends Component {
       .then(() => {
         let resultt = this.props.ProductCatalogImport;
         this.setState({ resultStr: resultt });
-        succes("You can download the result file");
+        NotifierHelper.success("You can download the result file");
       })
       .catch(() => {
         this.setState({ message: "Network Problem" });
-        error("Network Problem");
+        NotifierHelper.error("Network Problem");
       })
       .finally(() => {
         this.props.dispatch(HideLoader());
@@ -108,6 +106,7 @@ class ProductCatalogImport extends Component {
       </div>
     );
   }
+
 }
 
 const mapStateToProps = (state) => ({

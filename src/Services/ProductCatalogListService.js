@@ -2,6 +2,7 @@ import axios from "axios";
 import * as rootUrl from "./RootService";
 
 class ProductCatalogListService {
+
   getAllProductCatalogs() {
     return axios
       .get(rootUrl.BaseApiUrl + rootUrl.ProductCatalogListPath)

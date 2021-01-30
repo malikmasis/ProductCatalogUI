@@ -6,7 +6,7 @@ export const getAllProductCatalogs = () => (dispatch) => {
     (data) => {
       try {
         dispatch({
-          type: ActionTypes.GET_TEST_PACKAGE_SUCCESS,
+          type: ActionTypes.GET_SUCCESS,
           payload: JSON.stringify(data)
         });
 
@@ -28,7 +28,7 @@ export const getAllProductCatalogs = () => (dispatch) => {
         error.toString();
 
       dispatch({
-        type: ActionTypes.GET_TEST_PACKAGE_FAIL,
+        type: ActionTypes.GET_FAIL,
         payLoad: null,
       });
 

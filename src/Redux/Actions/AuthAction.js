@@ -13,8 +13,9 @@ export const login = (userInfo) => (dispatch) => {
         });
 
         return Promise.resolve();
-        
-      } catch (error) {
+
+      } 
+      catch (error) {
         dispatch({
           type: ActionTypes.SET_MESSAGE,
           payload: error.message,

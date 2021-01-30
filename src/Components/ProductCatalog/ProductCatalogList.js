@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Table, Button } from "reactstrap";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
-import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
+import { HideLoader } from "../../Redux/Actions/LoaderAction";
 import { getAllProductCatalogs } from "../../Redux/Actions/ProductCatalogListAction";
 import ProductCatalogDeleteService from "../../Services/ProductCatalogDeleteService";
-import { succes, error } from "../../Helpers/NotifierHelper";
+import NotifierHelper from "../../Helpers/NotifierHelper";
 
 class ProductCatalogList extends Component {
 
@@ -15,10 +15,10 @@ class ProductCatalogList extends Component {
   };
 
   componentDidMount() {
-    this.UserList();
+    this.getProductCatalogList();
   }
 
-  UserList() {
+  getProductCatalogList() {
     this.props.dispatch(getAllProductCatalogs())
       .then(() => {
         let productCatalogs = JSON.parse(this.props.ProductCatalogList);
@@ -27,37 +27,33 @@ class ProductCatalogList extends Component {
         }
         else {
           this.setState({ resultStr: this.props.message });
-          error("Cannot Get", this.props.message);
+          NotifierHelper.error("Cannot Get", this.props.message);
         }
       })
       .catch(() => {
         this.setState({ resultStr: this.props.message });
         this.setState({ message: "Network Problem" });
-        error("Network Problem", this.props.message);
+        NotifierHelper.error("Network Problem", this.props.message);
       })
       .finally(() => {
         this.props.dispatch(HideLoader());
       });
   }
 
-  getItem = (category) => {
-    console.log("selam", category.id);
-  }
-
   remove = id => {
-    console.log("selam", id);
-    var he = ProductCatalogDeleteService.removeProductCatalog(id).then((data) => {
-      if (data.id > 0) {
-        let productCatalogs = this.state.categories.filter(c => c.id !== id);
-        this.setState({ categories: productCatalogs });
-        succes(`The product named ${data.name} has been deleted.`);
-      }
-      else {
-        error("Unhandled Error", data);
-      }
-    })
+    ProductCatalogDeleteService.removeProductCatalog(id)
+      .then((data) => {
+        if (data.id > 0) {
+          let productCatalogs = this.state.categories.filter(c => c.id !== id);
+          this.setState({ categories: productCatalogs });
+          NotifierHelper.success(`The product named ${data.name} has been deleted.`);
+        }
+        else {
+          NotifierHelper.error("Unhandled Error", data);
+        }
+      })
       .catch(() => {
-        error("Network Problem", this.props.message);
+        NotifierHelper.error("Network Problem", this.props.message);
       });
   }
 
@@ -86,7 +82,7 @@ class ProductCatalogList extends Component {
           <tbody>
             {this.state.categories.map(category => (
               <tr key={category.id}>
-                <td><Link to={"/ProductCatalogItem/"+category.id}>{category.name}</Link></td>
+                <td><Link to={"/ProductCatalogItem/" + category.id}>{category.name}</Link></td>
                 <td>{category.code}</td>
                 <td>{category.price}</td>
                 <td>

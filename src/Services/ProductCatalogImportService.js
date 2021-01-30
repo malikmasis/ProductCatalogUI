@@ -2,6 +2,7 @@ import axios from "axios";
 import * as rootUrl from "./RootService";
 
 class ProductCatalogImportService {
+  
   importProductCatalog(file) {
     return axios
       .post(rootUrl.BaseApiUrl + rootUrl.ProductCatalogImportPath, file)

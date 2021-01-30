@@ -3,7 +3,7 @@ import * as rootUrl from "./RootService";
 
 
 class ProductCatalogDeleteService {
-
+  
   removeProductCatalog = (id) => {
     return axios
       .delete(rootUrl.BaseApiUrl + rootUrl.ProductCatalogDeletePath + '/' + id)
@@ -12,6 +12,7 @@ class ProductCatalogDeleteService {
         return token;
       });
   }
+
 }
 
 export default new ProductCatalogDeleteService();

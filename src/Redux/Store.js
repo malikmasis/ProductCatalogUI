@@ -1,7 +1,9 @@
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension/logOnlyInProduction";
-import rootReducer from "./Reducers/RootReducer";
 import thunk from "redux-thunk";
+
+import rootReducer from "./Reducers/RootReducer";
+
 
 const initialState = {};
 const middleware = [thunk];

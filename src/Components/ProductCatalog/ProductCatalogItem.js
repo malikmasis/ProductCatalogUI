@@ -6,28 +6,31 @@ import { Button, TextField, FormControl, FormGroup } from "@material-ui/core";
 import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
 import { saveProductCatalog } from "../../Redux/Actions/ProductCatalogItemAction";
 import ProductCatalogGetItemService from "../../Services/ProductCatalogGetItemService";
-import { succes, error } from "../../Helpers/NotifierHelper";
+import NotifierHelper from "../../Helpers/NotifierHelper";
+
 
 class ProductCatalogItem extends Component {
   state = { codeError: null, nameError: null, priceError: null, product: null };
 
   componentDidMount() {
-    const id = this.props.match.params.categoryId;
-    this.getProduct(id);
+    let id = this.props.match.params.categoryId;
+    if (id !== undefined) {
+      this.getProduct(id);
+    }
   }
 
   getProduct = id => {
-    console.log("selam", id);
-    var he = ProductCatalogGetItemService.getItemProductCatalogs(id).then((data) => {
-      if (data.id > 0) {
-        this.setState({ product: data });
-      }
-      else {
-        error("Unhandled Error", data);
-      }
-    })
+    ProductCatalogGetItemService.getItemProductCatalogs(id)
+      .then((data) => {
+        if (data.id > 0) {
+          this.setState({ product: data });
+        }
+        else {
+          NotifierHelper.error("Unhandled Error", data);
+        }
+      })
       .catch(() => {
-        error("Network Problem", this.props.message);
+        NotifierHelper.error("Networkk Problem", this.props.message);
       });
   }
 
@@ -74,17 +77,17 @@ class ProductCatalogItem extends Component {
         let saveProductCatalog = JSON.parse(this.props.ProductCatalogItem);
         if (saveProductCatalog.id > 0) {
           this.setState({ resultStr: saveProductCatalog.value });
-          succes("Recorded successfully");
+          NotifierHelper.success("Recorded successfully");
         }
         else {
           this.setState({ resultStr: saveProductCatalog.rawApiResponse });
-          error("Cannot save", this.props.message);
+          NotifierHelper.error("Cannot save", this.props.message);
         }
       })
       .catch(() => {
         this.setState({ resultStr: saveProductCatalog.rawApiResponse });
         this.setState({ message: "Network Problem" });
-        error("Network Problem", this.props.message);
+        NotifierHelper.error("Network Problem", this.props.message);
       })
       .finally(() => {
         this.props.dispatch(HideLoader());

@@ -5,6 +5,7 @@ let initialState = {
 };
 
 export default function LoaderStateReducer(state = initialState, action) {
+
   switch (action.type) {
     case actionTypes.SHOW_LOADER:
       return { ...state, loading: true };
@@ -13,4 +14,5 @@ export default function LoaderStateReducer(state = initialState, action) {
     default:
       return state;
   }
+
 }

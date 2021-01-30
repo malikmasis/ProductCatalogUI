@@ -7,7 +7,7 @@ export const importProductCatalog = (userInfo) => (dispatch) => {
       try {
         
         dispatch({
-          type: ActionTypes.GET_TEST_PACKAGE_SUCCESS,
+          type: ActionTypes.GET_SUCCESS,
           payload: JSON.stringify(data),
         });
 
@@ -29,7 +29,7 @@ export const importProductCatalog = (userInfo) => (dispatch) => {
         error.toString();
 
       dispatch({
-        type: ActionTypes.GET_TEST_PACKAGE_FAIL,
+        type: ActionTypes.GET_FAIL,
         payLoad: null,
       });
 
