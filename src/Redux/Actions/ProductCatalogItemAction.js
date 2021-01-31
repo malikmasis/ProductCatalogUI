@@ -1,11 +1,11 @@
-import ProductCatalogService from "../../Services/ProductCatalogService";
+import ProductCatalogSaveUpdateService from "../../Services/ProductCatalogSaveUpdateService";
 import * as ActionTypes from "./ActionTypes";
 
-export const saveProductCatalog = (productInfo) => (dispatch) => {
-  return ProductCatalogService.saveProductCatalog(productInfo).then(
+export const saveUpdateProductCatalog = (productInfo, id) => (dispatch) => {
+  return ProductCatalogSaveUpdateService.saveUpdateProductCatalog(productInfo, id).then(
     (data) => {
       try {
-        
+
         dispatch({
           type: ActionTypes.GET_SUCCESS,
           payload: JSON.stringify(data)

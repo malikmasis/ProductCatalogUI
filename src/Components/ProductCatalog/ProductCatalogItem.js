@@ -4,7 +4,7 @@ import { Form } from "reactstrap";
 import { Button, TextField, FormControl, FormGroup } from "@material-ui/core";
 
 import { HideLoader, ShowLoader } from "../../Redux/Actions/LoaderAction";
-import { saveProductCatalog } from "../../Redux/Actions/ProductCatalogItemAction";
+import { saveUpdateProductCatalog } from "../../Redux/Actions/ProductCatalogItemAction";
 import ProductCatalogGetItemService from "../../Services/ProductCatalogGetItemService";
 import NotifierHelper from "../../Helpers/NotifierHelper";
 
@@ -24,13 +24,16 @@ class ProductCatalogItem extends Component {
       .then((data) => {
         if (data.id > 0) {
           this.setState({ product: data });
+          this.setState({ "code": data.code });
+          this.setState({ "name": data.name });
+          this.setState({ "price": data.price });
         }
         else {
-          NotifierHelper.error("Unhandled Error", data);
+          NotifierHelper.error("Unhandled Error:" + data);
         }
       })
       .catch(() => {
-        NotifierHelper.error("Networkk Problem", this.props.message);
+        NotifierHelper.error("Network Problem: " + this.props.message);
       });
   }
 
@@ -69,25 +72,22 @@ class ProductCatalogItem extends Component {
       code: this.state.code,
       name: this.state.name,
       price: +this.state.price,
-      photo: this.state.photo,
+      photo: this.state.photo
     };
 
-    this.props.dispatch(saveProductCatalog(productCatalogInfo))
+    this.props.dispatch(saveUpdateProductCatalog(productCatalogInfo, this.props.match.params.categoryId))
       .then(() => {
-        let saveProductCatalog = JSON.parse(this.props.ProductCatalogItem);
-        if (saveProductCatalog.id > 0) {
-          this.setState({ resultStr: saveProductCatalog.value });
+        let saveUpdateProductCatalog = JSON.parse(this.props.ProductCatalogItem);
+        if (saveUpdateProductCatalog.id > 0) {
           NotifierHelper.success("Recorded successfully");
         }
         else {
-          this.setState({ resultStr: saveProductCatalog.rawApiResponse });
-          NotifierHelper.error("Cannot save", this.props.message);
+          NotifierHelper.error("Cannot save: " + this.props.message);
         }
       })
       .catch(() => {
-        this.setState({ resultStr: saveProductCatalog.rawApiResponse });
-        this.setState({ message: "Network Problem" });
-        NotifierHelper.error("Network Problem", this.props.message);
+        this.setState({ message: "Network Problem: " + this.props.message });
+        NotifierHelper.error("Network Problem" );
       })
       .finally(() => {
         this.props.dispatch(HideLoader());
@@ -116,7 +116,7 @@ class ProductCatalogItem extends Component {
                   className="input"
                   id="code"
                   label="Code"
-                  value={this.state.product !== null ? this.state.product.code : ''}
+                  value={this.state.code}
                   variant="outlined"
                   onChange={this.handleChange}
                 />
@@ -130,7 +130,7 @@ class ProductCatalogItem extends Component {
                   className="input"
                   id="name"
                   label="Name"
-                  value={this.state.product !== null ? this.state.product.name : ''}
+                  value={this.state.name}
                   variant="outlined"
                   onChange={this.handleChange}
                 />
@@ -144,7 +144,7 @@ class ProductCatalogItem extends Component {
                   className="input"
                   id="price"
                   label="Price"
-                  value={this.state.product !== null ? this.state.product.price : 0}
+                  value={this.state.price}
                   variant="outlined"
                   type="number"
                   onChange={this.handleChange}
