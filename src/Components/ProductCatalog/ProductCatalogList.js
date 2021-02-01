@@ -60,6 +60,10 @@ class ProductCatalogList extends Component {
     }
   }
 
+  gotoDetailPage = id => {
+    this.props.history.push('/ProductCatalogItem/'+ id);
+  }
+
   render() {
     const message = this.props.message.message;
     return (
@@ -77,16 +81,16 @@ class ProductCatalogList extends Component {
         <Table striped>
           <thead>
             <tr>
-              <th>Category Name</th>
               <th>Category Code</th>
+              <th>Category Name</th>
               <th>Unit Price</th>
             </tr>
           </thead>
           <tbody>
             {this.state.categories.map(category => (
-              <tr key={category.id}>
-                <td><Link to={"/ProductCatalogItem/" + category.id}>{category.name}</Link></td>
+              <tr key={category.id} onClick={() => this.gotoDetailPage(category.id)}>
                 <td>{category.code}</td>
+                <td>{category.name}</td>
                 <td>{category.price}</td>
                 <td>
                   <Button
