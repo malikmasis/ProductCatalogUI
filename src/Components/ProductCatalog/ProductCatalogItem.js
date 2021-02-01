@@ -80,6 +80,7 @@ class ProductCatalogItem extends Component {
         let saveUpdateProductCatalog = JSON.parse(this.props.ProductCatalogItem);
         if (saveUpdateProductCatalog.id > 0) {
           NotifierHelper.success("Recorded successfully");
+          this.props.history.push("/ProductCatalogList");
         }
         else {
           NotifierHelper.error("Cannot save: " + this.props.message);
@@ -87,7 +88,7 @@ class ProductCatalogItem extends Component {
       })
       .catch(() => {
         this.setState({ message: "Network Problem: " + this.props.message });
-        NotifierHelper.error("Network Problem" );
+        NotifierHelper.error("Network Problem");
       })
       .finally(() => {
         this.props.dispatch(HideLoader());
@@ -170,6 +171,7 @@ class ProductCatalogItem extends Component {
       </div>
     );
   }
+
 }
 
 const mapStateToProps = (state) => ({

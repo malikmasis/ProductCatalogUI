@@ -12,7 +12,6 @@ class ProductCatalogSaveUpdateService {
         });
     }
     else {
-      debugger
       return axios
         .put(rootUrl.BaseApiUrl + rootUrl.ProductCatalogUpdatePath + '/' + id, product)
         .then((res) => {

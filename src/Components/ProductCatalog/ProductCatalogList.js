@@ -41,20 +41,23 @@ class ProductCatalogList extends Component {
   }
 
   remove = id => {
-    ProductCatalogDeleteService.removeProductCatalog(id)
-      .then((data) => {
-        if (data.id > 0) {
-          let productCatalogs = this.state.categories.filter(c => c.id !== id);
-          this.setState({ categories: productCatalogs });
-          NotifierHelper.success(`The product named ${data.name} has been deleted.`);
-        }
-        else {
-          NotifierHelper.error("Unhandled Error", data);
-        }
-      })
-      .catch(() => {
-        NotifierHelper.error("Network Problem", this.props.message);
-      });
+    if (window.confirm("Delete the item?")) {
+      ProductCatalogDeleteService.removeProductCatalog(id)
+        .then((data) => {
+          if (data.id > 0) {
+            let productCatalogs = this.state.categories.filter(c => c.id !== id);
+            this.setState({ categories: productCatalogs });
+            NotifierHelper.success(`The product named ${data.name} has been deleted.`);
+          }
+
+          else {
+            NotifierHelper.error("Unhandled Error", data);
+          }
+        })
+        .catch(() => {
+          NotifierHelper.error("Network Problem", this.props.message);
+        });
+    }
   }
 
   render() {
