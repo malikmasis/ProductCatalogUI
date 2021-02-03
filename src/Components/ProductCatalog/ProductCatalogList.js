@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Table, Button } from "reactstrap";
-import { Link } from "react-router-dom"
 
 import { HideLoader } from "../../Redux/Actions/LoaderAction";
 import { getAllProductCatalogs } from "../../Redux/Actions/ProductCatalogListAction";
